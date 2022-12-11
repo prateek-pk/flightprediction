@@ -7,9 +7,9 @@ model = pickle.load(open('C:/Users/lenovo/Desktop/pk/atom/assorted/Flight-Fare-P
 def main():
     st.title('Flight Price Prediction')
 
-    Source = st.selectbox("Choose Source value as foolows:'Chennai':1,	'Delhi':2, 'Kolkata':3, 'Mumbai':4, 'Banglore':5", [1,2,3,4,5] , key='1')
+    Source = st.selectbox("Choose Source value as follows:'Chennai':1,	'Delhi':2, 'Kolkata':3, 'Mumbai':4, 'Banglore':5", [1,2,3,4,5] , key='1')
 
-    Destination = st.selectbox("Choose Destination value as foolows: 'Cochin':1, 'Delhi':2, 'Hyderabad':3, 'Kolkata':4, 'New Delhi':5, 'Banglore':6", [1,2,3,4,5,6], key='2')
+    Destination = st.selectbox("Choose Destination value as follows: 'Cochin':1, 'Delhi':2, 'Hyderabad':3, 'Kolkata':4, 'New Delhi':5, 'Banglore':6", [1,2,3,4,5,6], key='2')
 
     Airline = st.selectbox("Choose Airline values as follows: 'Air India':1,	'GoAir':2,	'IndiGo':3,	'Jet Airways':4,	'Jet Airways Business':5,	'Multiple carriers':6,	'Multiple carriers Premium economy':7,	'SpiceJet':8,	'Vistara':9,	'Vistara Premium economy':10, 'Trujet':11'", [1,2,3,4,5,6,7,8,9,10,11], key='3')
 
