@@ -45,6 +45,11 @@ if 'Vistara' not in st.session_state:
 	st.session_state.Vistara = 0
 if 'VistaraP' not in st.session_state:
     st.session_state.VistaraP = 0
+#duration hour and minutes
+if 'Duration_Hour' not in st.session_state:
+    st.session_state.Duration_Hour = 0
+if 'Duration_Minute' not in st.session_state:
+    st.session_state.Duration_Minute = 0
 
 
 def main():
@@ -103,13 +108,21 @@ def main():
     Arrival_hour = st.selectbox('Arrival Hour', ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23'], key='9')
     Arrival_Minute = st.selectbox('Arrival Minute', ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '47', '48', '49', '50', '51', '52', '53', '54', '55', '56', '57', '58', '59'], key='10')
 
+    if int(Arrival_hour) > int(Dep_hour):
+        st.session_state.Duration_Hour = int(Arrival_hour) - int(Dep_hour)
+    else:
+        st.session_state.Duration_Hour = 23 - (int(Dep_hour) - int(Arrival_hour))
 
+    if int(Arrival_Minute) > int(Dep_Minute):
+        st.session_state.Duration_Minute = int(Arrival_Minute) - int(Dep_Minute)
+    else:
+        st.session_state.Duration_Minute = 60 - (int(Dep_hour) - int(Arrival_hour))
 
 
 
     #Prediction
     if st.button('Predict'):
-        makeprediction = model.predict([[Total_Stops,	Journey_Day,	Journey_Month,	Dep_hour,	Dep_Minute,	Arrival_hour,	Arrival_Minute,	Duration_Hour,	Duration_Minute,	AirIndia,	GoAir,	IndiGo,	JetAirways,	JetAirwaysP,	MultipleCarriers,	MultipleCarriersP,	SpiceJet,	Vistara,	VistaraP,	Source_Chennai,    Source_Delhi,	Source_Kolkata,   Source_Mumbai,	Destination_Cochin,  Destination_Delhi,  Destination_Hyderabad,	Destination_Kolkata,	Destination_New_Delhi]])
+        makeprediction = model.predict([[Total_Stops,	Journey_Day,	Journey_Month,	Dep_hour,	Dep_Minute,	Arrival_hour,	Arrival_Minute,   Duration_Hour,	Duration_Minute,	AirIndia,	GoAir,	IndiGo,	JetAirways,	JetAirwaysP,	MultipleCarriers,	MultipleCarriersP,	SpiceJet,	Vistara,	VistaraP,	Source_Chennai,    Source_Delhi,	Source_Kolkata,   Source_Mumbai,	Destination_Cochin,  Destination_Delhi,  Destination_Hyderabad,	Destination_Kolkata,	Destination_New_Delhi]])
         st.success('As of our prediction the price of your flight might be {}.'.format(makeprediction))
 
 main()
