@@ -44,24 +44,27 @@ flight['Duration_Minute'] = duration_minute
 flight.drop(columns='Duration',inplace=True)
 
 Airline = flight['Airline']
-Airline = pd.get_dummies(Airline , drop_first=True)
+d = {'Air India':1,	'GoAir':2,	'IndiGo':3,	'Jet Airways':4,	'Jet Airways Business':5,	'Multiple carriers':6,	'Multiple carriers Premium economy':7,	'SpiceJet':8,	'Vistara':9,	'Vistara Premium economy':10, 'Trujet':11}
+flight['Airline'] = flight['Airline'].map(d)
 
-Source = flight[['Source']]
-Source = pd.get_dummies(Source , drop_first=True)
+
+Source = flight['Source']
+d = {'Chennai':1,	'Delhi':2, 'Kolkata':3, 'Mumbai':4, 'Banglore':5}
+flight['Source'] = flight['Source'].map(d)
 
 Destination = flight[['Destination']]
-Destination = pd.get_dummies(Destination , drop_first=True)
+d = {'Cochin':1, 'Delhi':2, 'Hyderabad':3, 'Kolkata':4, 'New Delhi':5, 'Banglore':6}
+flight['Destination'] = flight['Destination'].map(d)
 
 flight.drop(columns=['Route','Additional_Info'],axis=1 , inplace=True)
 
 flight.replace( { 'non-stop':0 , '1 stop':1 , '2 stops':2 , '3 stops':3 ,'4 stops':4 } ,inplace=True)
 
-flight = pd.concat( [flight , Airline ,Source , Destination] , axis=1)
-
 pd.set_option('display.max_columns',None)
 pd.set_option('display.max_rows',None)
 
-flight.drop(columns = [ 'Airline' , 'Source' , 'Destination' ] , inplace=True)
+flight.dropna(inplace=True)
+print(flight.head())
 
 flight_test = pd.read_excel('C:/Users/lenovo/Desktop/pk/atom/assorted/Test_set.xlsx')
 
@@ -102,24 +105,26 @@ flight_test['Duration_Minute'] = duration_minute
 flight_test.drop(columns='Duration',inplace=True)
 
 Airline = flight_test['Airline']
-Airline = pd.get_dummies(Airline , drop_first=True)
+d = {'Air India':1,	'GoAir':2,	'IndiGo':3,	'Jet Airways':4,	'Jet Airways Business':5,	'Multiple carriers':6,	'Multiple carriers Premium economy':7,	'SpiceJet':8,	'Vistara':9,	'Vistara Premium economy':10, 'Trujet':11}
+flight_test['Airline'] = flight_test['Airline'].map(d)
 
-Source = flight_test[['Source']]
-Source = pd.get_dummies(Source , drop_first=True)
+Source = flight_test['Source']
+d = {'Chennai':1,	'Delhi':2, 'Kolkata':3, 'Mumbai':4, 'Banglore':5}
+flight_test['Source'] = flight_test['Source'].map(d)
 
-Destination = flight_test[['Destination']]
-Destination = pd.get_dummies(Destination , drop_first=True)
+Destination = flight[['Destination']]
+d = {'Cochin':1, 'Delhi':2, 'Hyderabad':3, 'Kolkata':4, 'New Delhi':5, 'Banglore':6}
+flight_test['Destination'] = flight_test['Destination'].map(d)
 
 flight_test.drop(columns=['Route','Additional_Info'],axis=1 , inplace=True)
 
 flight_test.replace( { 'non-stop':0 , '1 stop':1 , '2 stops':2 , '3 stops':3 ,'4 stops':4 } ,inplace=True)
 
-flight_test = pd.concat( [flight_test , Airline ,Source , Destination] , axis=1)
-
 pd.set_option('display.max_columns',None)
 pd.set_option('display.max_rows',None)
 
-flight_test.drop(columns = [ 'Airline' , 'Source' , 'Destination' ] , inplace=True)
+flight_test.dropna(inplace=True)
+print(flight_test.head())
 
 X = flight.drop(columns='Price',axis=1)
 y = flight['Price']
@@ -180,8 +185,8 @@ print('RMSE:', np.sqrt(metrics.mean_squared_error(y_test, prediction)))
 metrics.r2_score(y_test,prediction)
 
 import pickle
-file = open('Flight-Fare-Prediction.pkl','wb')
+file = open('C:/Users/lenovo/Desktop/pk/atom/assorted/Flight-Fare-Prediction.pkl','wb')
 pickle.dump(rfr_random,file)
 
-model = open('Flight-Fare-Prediction.pkl','rb')
+model = open('C:/Users/lenovo/Desktop/pk/atom/assorted/Flight-Fare-Prediction.pkl','rb')
 mod = pickle.load(model)
